@@ -1,0 +1,334 @@
+PRD:  YouTube  Subscribed  Channels  Face-
+Oﬀ
+Status: Ready for implementation
+Audience: OpenCode / Pickle model
+Product type: Minimal web application
+1. Product summary
+Build a simple web game that compares the YouTube channels a user already subscribes to. 
+The user connects YouTube, the app loads subscribed channels, and the app presents two 
+channels at a time. The user chooses the preferred channel. The winner advances through a 
+single-elimination tournament until one ﬁnal channel remains.
+The product should feel like a small focused utility, not a social network. The interface 
+should be white, black, bold, readable, and easy to understand without instructions.
+2. Problem
+A user may subscribe to many YouTube channels but may not know which one they 
+personally prefer. A normal subscription list is passive. This product turns that list into a 
+quick comparison game.
+3. Goals
+The ﬁrst version must:
+1. Securely connect the user’s YouTube account.
+2. Retrieve the user’s subscribed channels through the YouTube Data API.
+3. Present two channels in a clear head-to-head matchup.
+4. Let the user choose one channel with one obvious action.
+5. Move the selected channel into the next round.
+6. Continue until one channel is the winner.
+7. Work well on mobile and desktop.
+8. Use a deliberately minimal visual design.
+Core ﬂow: Connect YouTube → load subscriptions → choose left or right → repeat → see 
+one ﬁnal winner.
+4. Non-goals for version one
+Do not build public proﬁles, social feeds, comments, chat, leaderboards, 
+recommendations, video playback, channel search, custom themes, elaborate animations, 
+or a permanent social account system.
+5. User ﬂow
+5.1 Landing page
+Show only what is needed to start:
+• Heading: Find Your Favorite YouTube Channel
+• Supporting text: Compare the channels you subscribe to and choose one winner.
+• Primary button: Connect YouTube
+• Privacy note: Read-only access. We do not change your YouTube account.
+Do not add a complex navbar. A plain text wordmark is enough.
+5.2 Connect YouTube
+When the user clicks Connect YouTube:
+1. Start Google OAuth 2.0.
+2. Request the narrowest practical read-only YouTube scope, preferably youtube.readonly  if 
+it supports the chosen API ﬂow.
+3. Never request permission to upload, edit, delete, or manage YouTube content.
+4. Return the user to the app after authorization.
+5. Retrieve the user’s subscriptions.
+6. Show a loading state while data is retrieved.
+7. If the user cancels or authorization fails, show a plain-language error and a retry action.
+Loading copy: Loading your subscribed channels…
+5.3 Ready screen
+After subscriptions load, show the number of channels found and a primary Start Face-Oﬀ 
+button. An optional Reconnect YouTube action may also be shown.
+If fewer than two valid channels are available, show:
+You need at least two subscribed channels to start a face-oﬀ.
+5.4 Face-oﬀ screen
+Show:
+• A small progress label, such as Match 3 of 12.
+• A small round label, such as Round 2.
+• One channel card on the left.
+• One channel card on the right.
+• A small VS label between them on desktop.
+• Channel thumbnail and channel name on each card.
+• One large choice button on each card.
+Suggested buttons:
+• Choose left
+• Choose right
+The accessible name must include the channel name, for example: Choose Kurzgesagt ‒ In a 
+Nutshell .
+When the user chooses a channel, advance immediately to the next matchup. Do not 
+require a second conﬁrmation click.
+5.5 Tournament behavior
+Use a single-elimination tournament:
+1. Deduplicate channels by channel ID.
+2. Randomize the channel order once when a game starts.
+3. Pair channels from left to right.
+4. Let the user choose one winner from every pair.
+5. Put winners into the next round.
+6. If a round has an odd number of channels, give one channel a bye.
+7. Repeat until one channel remains.
+8. Never pair a channel against itself.
+9. Keep the current matchup stable during rendering and loading.
+10. Prevent double clicks from advancing the game twice.
+A full visual bracket is not required for version one. Use a small progress indicator instead.
+5.6 Result screen
+Show:
+• Heading: Your Favorite Channel
+• Large thumbnail.
+• Winning channel name.
+• Primary button: Play Again
+• Secondary button: View on YouTube
+• Optional link: Start Over with Updated Subscriptions
+Do not use confetti, rankings, or unrelated recommendations in version one.
+6. Functional requirements
+6.1 Authentication
+• Use Google OAuth 2.0.
+• Keep client secrets and tokens out of browser source code.
+• Use a secure server-side callback where required.
+• Request read-only access only.
+• Handle denied access, expired access, and failed callbacks.
+• Allow reconnecting without stale UI state.
+6.2 Subscription retrieval
+Retrieve all available subscriptions using pagination. Extract at least the channel ID, 
+channel title, thumbnail URL when available, and public channel URL.
+Remove duplicates, ignore malformed records safely, and handle empty results. Map API 
+failures and rate limits to retryable user-facing errors.
+Do not fetch subscriptions repeatedly during one game unless the user explicitly chooses to 
+start over with updated data.
+6.3 Suggested data structures
+Plain Text
+interface Channel {
+  id: string;
+  title: string;
+  thumbnailUrl?: string;
+  channelUrl: string;
+}
+interface FaceOffGame {
+  allChannels: Channel[];
+  currentRound: Channel[];
+  nextRound: Channel[];
+  currentMatchup: [Channel, Channel?];
+  completedMatches: number;
+  totalMatches: number;
+  winner?: Channel;
+  status: "not_started" | "playing" | "finished";
+}
+The implementation may use a diﬀerent structure if the behavior remains the same.
+6.4 Reset behavior
+• Play Again starts a new randomized tournament using the already loaded channels.
+• Start Over with Updated Subscriptions fetches current subscriptions again.
+• A choice does not need to be undoable during a match. Restarting is suﬃcient for 
+version one.
+7. Responsive and accessibility requirements
+On desktop, show the cards side by side. On mobile, stack them vertically in left-then-right 
+order. Both choice buttons must remain easy to tap.
+Use semantic HTML and real buttons. Ensure keyboard access, visible focus styles, strong 
+contrast, descriptive image alt text, and accessible names containing channel names. Do 
+not communicate state through color alone. Respect reduced-motion preferences if 
+transitions are added.
+8. Visual and UX direction
+The design must be intentionally plain:
+• Background: white.
+• Text: black or near-black.
+• Typography: Arial, Arial Black, or a similar sans-serif.
+• Headings: bold and compact.
+• Cards: white with a thin black or light-gray border.
+• Buttons: large, clear, and easy to distinguish.
+• Shadows: none or very subtle.
+• Color: use at most one restrained accent for focus or selected state.
+• Animation: none or a short transition only.
+• Layout: centered, narrow, and uncluttered.
+Avoid gradients, glassmorphism, illustrations, dashboards, sidebars, carousels, complex 
+navigation, and decorative UI.
+Preferred copy is direct: Connect YouTube, Start Face-Oﬀ, Choose this channel, Next 
+match, Your Favorite Channel, and Play Again.
+9. Suggested screen layouts
+Landing
+Plain Text
+[Simple wordmark]
+Find Your Favorite YouTube Channel
+Compare the channels you subscribe to and choose one winner.
+[Connect YouTube]
+Read-only access. We do not change your YouTube account.
+Ready
+Plain Text
+You have 42 subscribed channels.
+[Start Face-Off]
+Matchup
+Plain Text
+Round 3                         Match 8 of 20
+[Channel image]                 [Channel image]
+Left Channel                    Right Channel
+[Choose left]        VS         [Choose right]
+Result
+Plain Text
+Your Favorite Channel
+[Channel image]
+Winning Channel
+[View on YouTube]
+[Play Again]
+10. Error and empty states
+Log technical details for developers, but show plain-language messages to users.
+11. Privacy and security
+Situation Message Action
+User cancels OAuth YouTube access was cancelled. Try Again
+OAuth failure We could not connect to 
+YouTube. Try Again
+API failure We could not load your 
+subscriptions right now. Try Again
+No subscriptions We could not ﬁnd any 
+subscribed channels. Refresh / View YouTube
+One subscription You need at least two 
+subscribed channels to play. Refresh / Back
+Missing thumbnail No thumbnail available. Show neutral placeholder
+Session expired Your YouTube connection 
+expired. Reconnect YouTube
+Network loss We lost the connection. Your 
+current game is still here. Retry
+• Request the minimum YouTube permission necessary.
+• State clearly that access is read-only.
+• Never store a Google password.
+• Do not request write access.
+• Do not sell or share subscription data.
+• Keep subscription data only as long as needed for the current session unless a later 
+version adds explicit account storage.
+• Secure OAuth tokens and never expose client secrets in client-side code.
+• Add a privacy policy before public launch.
+• Before release, review Google API Services User Data Policy, YouTube API terms, quota 
+rules, and branding requirements.
+12. Technical organization
+Keep these concerns separate:
+• Authentication layer: OAuth initiation, callback, token handling, and reconnect.
+• YouTube service layer: Pagination, normalization, and API error mapping.
+• Game logic layer: Randomization, pairing, byes, selection, progress, and winner 
+calculation.
+• UI layer: Landing, loading, ready, matchup, result, and error states.
+• Styling layer: Small global style system for typography, spacing, borders, and 
+responsive layout.
+The game logic must be testable without calling YouTube. Use mock channel objects for 
+unit tests.
+13. Acceptance criteria
+The implementation is complete when:
+1. The landing page immediately explains the product.
+2. A user can connect YouTube through OAuth.
+3. The app requests read-only access.
+4. The app retrieves paginated subscriptions.
+5. Duplicate, empty, missing-image, and malformed records are handled safely.
+6. A user with at least two channels can start a face-oﬀ.
+7. Exactly two choices appear in a normal matchup.
+8. One click advances the selected channel.
+9. Odd channel counts are handled with a bye.
+10. A channel is never paired against itself.
+11. The tournament ends with one winner.
+12. The result links to the winning channel on YouTube.
+13. Play Again starts a fresh randomized game.
+14. Updated subscriptions can be fetched explicitly.
+15. Loading, error, empty, and expired-session states are understandable.
+16. The layout works on mobile and desktop.
+17. The complete ﬂow is keyboard accessible.
+18. OAuth secrets and tokens are not exposed in client-side source code.
+19. Tests cover pairing, selection, byes, completion, reset, and API failure handling.
+20. No unrelated features or heavy UI are added.
+14. Suggested tests
+Game logic
+• Two channels produce one matchup and one winner.
+• Three channels produce one bye and a ﬁnal matchup.
+• Four channels produce two ﬁrst-round matchups and one ﬁnal matchup.
+• Five channels complete successfully.
+• A channel cannot be paired with itself.
+• Choosing left or right advances the correct channel.
+• Double clicks do not advance twice.
+• Play Again resets and randomizes the tournament.
+• Updated subscriptions replace the old channel list.
+Integration
+• OAuth success reaches the ready screen.
+• OAuth cancellation shows a retryable error.
+• Pagination is fully consumed.
+• Empty results reach the empty state.
+• API failure reaches the retry state.
+• Expired authorization oﬀers reconnect.
+UI
+• The landing page has one clear primary action.
+• Both matchup cards have equal visual weight.
+• Choice buttons have accessible names containing channel names.
+• The mobile layout does not hide or overlap choices.
+• Keyboard users can complete the game.
+• The result page shows the winner and expected actions.
+15. Deﬁnition of done
+The ﬁrst version is done when the acceptance criteria pass, the real YouTube authorization 
+ﬂow works in development, the core game tests pass, and the UI remains simple. If a 
+feature does not directly support connecting subscriptions, choosing between two 
+channels, or showing the ﬁnal winner, leave it out of version one.
+References
+[1] YouTube Data API Authentication
+[2] YouTube subscriptions.list Reference
+[3] Google OAuth 2.0 Documentation
+[4] YouTube API Services Terms of Service
+[5] YouTube API Services Developer Policies
+[6] YouTube API Quota and Compliance Audits
+[7] YouTube API Services Branding Guidelines
+[8] Web Content Accessibility Guidelines
+[9] OWASP OAuth 2.0 Cheat Sheet
+[10] OWASP Session Management Cheat Sheet
+[11] WAI-ARIA Authoring Practices Guide
+[12] Playwright Documentation
+[13] Vitest Documentation
+[14] MDN Accessibility Documentation
+[15] MDN Web Security Documentation
+[16] YouTube API Required Minimum Functionality
+[17] YouTube Data API Getting Started
+[18] YouTube channels.list Reference
+[19] WCAG Keyboard Accessibility
+[20] WCAG Focus Visible
+[21] WCAG Contrast Minimum
+[22] WCAG Target Size
+[23] OWASP Top 10 Web Application Security Risks
+[24] MDN sessionStorage Reference
+[25] MDN Reduced Motion Reference
+[26] MDN Button Element Reference
+[27] MDN HTTP 429 Reference
+[28] MDN HTTP 401 Reference
+[29] MDN CSRF Prevention Guide
+[30] OWASP CSRF Prevention
+[31] OWASP Cross-Site Scripting Prevention
+[32] YouTube Data API Errors
+[33] Google OAuth 2.0 Scopes
+[34] YouTube Data API Implementation Guide
+[35] YouTube Data API Reference
+[36] MDN CSS Grid Layout Guide
+[37] MDN Flexbox Guide
+[38] MDN History API Reference
+[39] MDN AbortController Reference
+[40] MDN URLSearchParams Reference
+[41] MDN Math.random Reference
+[42] MDN Map Reference
+[43] MDN Set Reference
+[44] WCAG Status Messages
+[45] WCAG Error Identiﬁcation
+[46] MDN Fetch API Guide
+[47] OAuth 2.0 Web Server Applications
+[48] YouTube Subscriptions Resource
+[49] YouTube Channels Resource
+[50] WAI-ARIA Button Pattern
+[51] MDN img Element Reference
+[52] MDN font-family Reference
+[53] MDN font-weight Reference
+[54] MDN border Reference
+[55] MDN gap Reference
+[56] MDN CSS Media Queries Reference
+[57] MDN Content Security Policy Reference
+[58] MDN Strict Transport Security Reference
+[59] OWASP HTTP Headers Cheat Sheet
+[60] YouTube Handling User Data
