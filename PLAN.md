@@ -99,6 +99,11 @@ faceoff/
 - Verification: 58 unit/integration tests, typecheck 0, build OK, 9/9 e2e, prod smoke returns 200 + headers on `/` and `/privacy`.
 - Remaining manual step for real Google flow: create Google credentials per `docs/oauth-setup.md`, fill `.env.local`, then run the manual verification checklist (consent screen, grant/deny, reconnect after server restart). Efficient for the user to do once.
 
+## Unit/coverage expansion (added)
+- Direct unit tests for the client data layers and remaining screens: `src/api.test.ts` (session status, subscription sanitizing + ApiError kind mapping, OAuth redirect), `src/dataClient.test.ts` (mock/real mode switching via `vi.stubEnv`), `src/mock.test.ts` (shape + defensive copies), and `Landing`/`Connecting`/`Ready`/`Result`/`ErrorScreen` screen tests; `server/config.test.ts` covers defaults + overrides.
+- Coverage tooling: `@vitest/coverage-v8` (pinned to `3.2.7` to match vitest), `npm run test:coverage`, thresholds enforced in `vitest.config.ts` (statements 80 / branches 80 / functions 85 / lines 80), excludes `server/e2eMock.ts`.
+- Verification: 99 unit/integration tests passing, typecheck 0, build OK, coverage 86.86% statements (client screens/data layers at 100%, `server/config.ts` 94.7%). Note: `coverage/` is gitignored; on Windows the prior run may leave a locked `coverage/` dir (EPERM) — remove it before re-running coverage.
+
 ## Keyboard-control requirements (added)
 - Left Arrow / Right Arrow choose left / right channel on the matchup screen.
 - Must not fire during Round transitions (same double-click guard logic).
