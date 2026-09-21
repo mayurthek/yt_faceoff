@@ -26,8 +26,8 @@ describe("Matchup", () => {
     const game = createGame([channel("a", "Alpha"), channel("b", "Beta")], alwaysZero);
     render(<Matchup game={game} onChoose={() => {}} />);
 
-    expect(screen.getByText("Alpha")).toBeInTheDocument();
-    expect(screen.getByText("Beta")).toBeInTheDocument();
+    expect(screen.getAllByText("Alpha").length).toBeGreaterThanOrEqual(1);
+    expect(screen.getAllByText("Beta").length).toBeGreaterThanOrEqual(1);
     expect(screen.getByRole("button", { name: "Choose Alpha" })).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "Choose Beta" })).toBeInTheDocument();
   });
@@ -38,7 +38,7 @@ describe("Matchup", () => {
       alwaysZero,
     );
     render(<Matchup game={game} onChoose={() => {}} />);
-    expect(screen.getByText("Round 1")).toBeInTheDocument();
+    expect(screen.getAllByText("Round 1").length).toBeGreaterThanOrEqual(1);
     expect(screen.getByText("Match 1 of 3")).toBeInTheDocument();
   });
 

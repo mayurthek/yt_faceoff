@@ -104,6 +104,15 @@ faceoff/
 - Coverage tooling: `@vitest/coverage-v8` (pinned to `3.2.7` to match vitest), `npm run test:coverage`, thresholds enforced in `vitest.config.ts` (statements 80 / branches 80 / functions 85 / lines 80), excludes `server/e2eMock.ts`.
 - Verification: 99 unit/integration tests passing, typecheck 0, build OK, coverage 86.86% statements (client screens/data layers at 100%, `server/config.ts` 94.7%). Note: `coverage/` is gitignored; on Windows the prior run may leave a locked `coverage/` dir (EPERM) — remove it before re-running coverage.
 
+## Tournament bracket UI (added)
+- Single-elimination bracket rendered alongside the comparison/matchup and on the result screen as a purely visual representation (decisions still happen on the comparison screen).
+- `Channel` gains optional `subscriberCount`; the game records a `history: PlayedMatch[]` (round, left, right, winner) so the bracket can be derived purely from game state — `src/game/types.ts`, advanced in `src/game/game.ts`, sanitized when positive & finite.
+- New pure module `src/bracket.ts`: `buildBracket(game) -> BracketModel` with `totalRounds`, `roundLabel` (Final/Semifinals/Quarterfinals/Round N by distance from the last round), per-round match derivation with states `played | bye | active | pending | tbd` (byes reconstructed from unplayed participants), and `formatSubscriberCount` (B/M/K).
+- New `src/screens/Bracket.tsx`: round columns + connector lines, avatar/name/subscriber-count cards, VS badge on the active matchup, won/lost strikethrough styling on played matches, TBD placeholders for future rounds, highlighted Final round + champion band. Styled in `src/styles.css` (`--color-line`, won/lost colors, `.bracket__*`) with horizontal scroll on mobile.
+- Wired into `Matchup` and `Result`; mock subscriptions carry `subscriberCount` where known.
+- Tests: `src/bracket.test.ts` (round counts/labels, bye reconstruction, played/active/pending/tbd states, champion, no mutation), `src/screens/Bracket.test.tsx` (labels, VS badge, subscriber formatting, champion, empty model -> nothing), game history lifecycle tests, sanitized subscriberCount passthrough.
+- Verification: 120 unit/integration tests passing, typecheck 0, build OK, coverage 89.26% statements.
+
 ## Keyboard-control requirements (added)
 - Left Arrow / Right Arrow choose left / right channel on the matchup screen.
 - Must not fire during Round transitions (same double-click guard logic).

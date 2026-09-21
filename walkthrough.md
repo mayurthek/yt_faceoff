@@ -73,15 +73,29 @@ expired-session reconnect, silent access-token refresh.
 - **Docs**: `docs/oauth-setup.md` (Google Cloud setup + consent screen + manual
   checklist), `docs/quota.md` (YouTube API quota).
 
+### Tournament bracket UI ✅
+- Single-elimination bracket on the comparison (Matchup) screen and Result screen as
+  a purely visual track — decisions still happen on the comparison screen.
+- Game core records a `history: PlayedMatch[]` (round, left, right, winner) and
+  channels carry an optional `subscriberCount`; `src/game/{types,game}.ts`.
+- Pure builder `src/bracket.ts` derives rounds (Final/Semifinals/Quarterfinals/Round N),
+  byes, and per-match states (`played | bye | active | pending | tbd`) from game state
+  without mutating it.
+- `src/screens/Bracket.tsx` renders round columns with connector lines, avatar/name/
+  subscriber-count cards, a VS badge on the active matchup, won/lost styling, TBD
+  placeholders, a highlighted Final, and a champion band. Plain CSS in `styles.css`
+  with horizontal scroll on mobile.
+
 ---
 
 ## 3. Current verification status
 
 | Check | Result |
 | --- | --- |
-| Unit + integration tests (`npm test`) | 58/58 pass |
+| Unit + integration tests (`npm test`) | 120/120 pass |
 | TypeScript (`npm run typecheck`) | 0 errors |
 | Production build (`npm run build`) | OK |
+| Coverage (`npm run test:coverage`) | 89.26% statements, above thresholds |
 | Playwright e2e (`npm run test:e2e`) | 9/9 pass |
 | Prod smoke (server: `/`, `/privacy`, headers) | 200 + security headers |
 
@@ -99,9 +113,10 @@ game is playable offline.
 
 ### Tests
 ```bash
-npm test          # unit + integration (58)
+npm test          # unit + integration (120)
 npm run typecheck
 npm run build
+npm run test:coverage  # coverage thresholds (statements 80, branches 80, funcs 85, lines 80)
 npm run test:e2e  # Playwright with mocked Google/YouTube (9)
 ```
 

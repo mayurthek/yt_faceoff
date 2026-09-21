@@ -26,11 +26,17 @@ export function sanitizeChannels(raw: readonly unknown[]): Channel[] {
       typeof record.thumbnailUrl === "string" && record.thumbnailUrl !== ""
         ? record.thumbnailUrl
         : undefined;
+    const subscriberCount =
+      typeof record.subscriberCount === "number" &&
+      Number.isFinite(record.subscriberCount) &&
+      record.subscriberCount > 0
+        ? record.subscriberCount
+        : undefined;
     const channelUrl =
       typeof record.channelUrl === "string" && record.channelUrl !== ""
         ? record.channelUrl
         : `https://www.youtube.com/channel/${id}`;
-    out.push({ id, title, thumbnailUrl, channelUrl });
+    out.push({ id, title, thumbnailUrl, subscriberCount, channelUrl });
   }
   return out;
 }
@@ -69,6 +75,7 @@ export function createGame(
     round: 1,
     winner: undefined,
     status: canStart ? "playing" : "not_started",
+    history: [],
   };
 }
 
@@ -80,6 +87,10 @@ export function advance(game: FaceOffGame, side: Side): FaceOffGame {
   const winner = side === "left" ? left : right;
   const completedMatches = game.completedMatches + 1;
   const nextRound = [...game.nextRound, winner];
+  const history = [
+    ...game.history,
+    { round: game.round, left, right, winner },
+  ];
   const rest = game.currentRound.filter(
     (channel) => channel.id !== left.id && channel.id !== right.id,
   );
@@ -98,6 +109,7 @@ export function advance(game: FaceOffGame, side: Side): FaceOffGame {
         nextRound: [],
         currentMatchup: [winnerChannel, undefined],
         completedMatches,
+        history,
         winner: winnerChannel,
         status: "finished",
       };
@@ -108,6 +120,7 @@ export function advance(game: FaceOffGame, side: Side): FaceOffGame {
       nextRound: [],
       currentMatchup: pairHead(nextRound),
       completedMatches,
+      history,
       round: game.round + 1,
     };
   }
@@ -118,6 +131,7 @@ export function advance(game: FaceOffGame, side: Side): FaceOffGame {
     nextRound,
     currentMatchup: pairHead(rest),
     completedMatches,
+    history,
   };
 }
 

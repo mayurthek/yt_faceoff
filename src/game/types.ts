@@ -2,12 +2,20 @@ export interface Channel {
   id: string;
   title: string;
   thumbnailUrl?: string;
+  subscriberCount?: number;
   channelUrl: string;
 }
 
 export type Side = "left" | "right";
 
 export type GameStatus = "not_started" | "playing" | "finished";
+
+export interface PlayedMatch {
+  round: number;
+  left: Channel;
+  right: Channel;
+  winner: Channel;
+}
 
 export interface FaceOffGame {
   allChannels: Channel[];
@@ -19,4 +27,5 @@ export interface FaceOffGame {
   round: number;
   winner?: Channel;
   status: GameStatus;
+  history: PlayedMatch[];
 }

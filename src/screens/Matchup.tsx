@@ -1,5 +1,7 @@
 import { useEffect } from "react";
+import { buildBracket } from "../bracket";
 import type { Channel, FaceOffGame, Side } from "../game/types";
+import Bracket from "./Bracket";
 
 interface MatchupProps {
   game: FaceOffGame;
@@ -82,6 +84,9 @@ export default function Matchup({ game, onChoose }: MatchupProps) {
         <ChannelCard side="right" channel={right} onChoose={onChoose} />
       </div>
       <p className="matchup__hint">Use the Left and Right arrow keys to choose.</p>
+      <div className="matchup__bracket">
+        <Bracket model={buildBracket(game)} />
+      </div>
     </main>
   );
 }

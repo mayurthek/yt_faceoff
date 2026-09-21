@@ -82,6 +82,21 @@ describe("normalization helpers", () => {
     }
     expect(orders.size).toBeGreaterThan(1);
   });
+
+  it("sanitizeChannels keeps a positive finite subscriberCount and drops others", () => {
+    const result = sanitizeChannels([
+      { id: "a", title: "Alpha", subscriberCount: 2500 },
+      { id: "b", title: "Beta", subscriberCount: 0 },
+      { id: "c", title: "Gamma", subscriberCount: -3 },
+      { id: "d", title: "Delta", subscriberCount: "lots" },
+      { id: "e", title: "Epsilon" },
+    ]);
+    expect(result[0]!.subscriberCount).toBe(2500);
+    expect(result[1]!.subscriberCount).toBeUndefined();
+    expect(result[2]!.subscriberCount).toBeUndefined();
+    expect(result[3]!.subscriberCount).toBeUndefined();
+    expect(result[4]!.subscriberCount).toBeUndefined();
+  });
 });
 
 describe("createGame", () => {
@@ -224,6 +239,46 @@ describe("double-click guard", () => {
     const second = guard(first, "left")!;
     expect(second).not.toBe(first);
     expect(second.completedMatches).toBe(first.completedMatches + 1);
+  });
+});
+
+describe("history", () => {
+  it("starts with an empty history", () => {
+    const game = createGame(channels(4), alwaysZero);
+    expect(game.history).toEqual([]);
+  });
+
+  it("records each played match with round, channels, and winner", () => {
+    const game = createGame(channels(4), alwaysZero);
+    const [left, right] = game.currentMatchup;
+    const after = advance(game, "left");
+    expect(after.history).toHaveLength(1);
+    expect(after.history[0]!.round).toBe(1);
+    expect(after.history[0]!.left.id).toBe(left!.id);
+    expect(after.history[0]!.right.id).toBe(right!.id);
+    expect(after.history[0]!.winner.id).toBe(left!.id);
+  });
+
+  it("tracks round transitions across a whole tournament", () => {
+    const game = createGame(
+      [channel("a"), channel("b"), channel("c"), channel("d")],
+      alwaysZero,
+    );
+    const { current } = playWholeGame(game, () => "left");
+    expect(current.history.map((m) => m.round)).toEqual([1, 1, 2]);
+    expect(current.history.map((m) => m.winner.id)).toEqual([
+      current.history[0]!.left.id,
+      current.history[1]!.left.id,
+      current.history[2]!.left.id,
+    ]);
+  });
+
+  it("playAgain resets the history", () => {
+    const game = createGame(channels(3), alwaysZero);
+    const finished = playWholeGame(game, () => "left").current;
+    expect(finished.history.length).toBeGreaterThan(0);
+    const replayed = playAgain(finished, alwaysZero);
+    expect(replayed.history).toEqual([]);
   });
 });
 

@@ -4,6 +4,10 @@
   --color-muted: #555555;
   --color-border: #cccccc;
   --color-accent: #1a73e8;
+  --color-line: #d0d0d0;
+  --color-won-bg: #e3f2e5;
+  --color-won-text: #1e7a34;
+  --color-lost: #9c9c9c;
   --font-sans: Arial, Helvetica, sans-serif;
 }
 
@@ -255,6 +259,226 @@ h1 {
 @media (prefers-reduced-motion: reduce) {
   .button {
     transition: none;
+  }
+}
+/* Tournament bracket */
+.bracket {
+  margin-top: 2rem;
+  text-align: left;
+}
+
+.bracket__track {
+  display: flex;
+  align-items: stretch;
+  gap: 1.25rem;
+  overflow-x: auto;
+  padding-bottom: 0.5rem;
+}
+
+.bracket__round {
+  flex: 0 0 auto;
+  min-width: 15rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.bracket__round-label {
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+  margin: 0 0 0.75rem;
+}
+
+.bracket__round--final .bracket__round-label {
+  color: var(--color-text);
+  font-weight: 700;
+}
+
+.bracket__round--final .bracket__round-label::before {
+  content: "★ ";
+}
+
+.bracket__column {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  gap: 0.25rem;
+  flex: 1;
+  min-height: 100%;
+}
+
+.bracket__match {
+  position: relative;
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  background: var(--color-bg);
+}
+
+.bracket__match::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: -0.1875rem;
+  width: 2px;
+  background: var(--color-line);
+}
+
+.bracket__round:not(:last-child) .bracket__match::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: calc(-1.25rem);
+  width: 1.25rem;
+  height: 2px;
+  background: var(--color-line);
+}
+
+.bracket__round:last-child .bracket__match::before {
+  display: none;
+}
+
+.bracket__match--active {
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 1px var(--color-accent);
+}
+
+.bracket__match--tbd {
+  border-style: dashed;
+  background: transparent;
+}
+
+.bracket__match--bye {
+  background: #fafafa;
+}
+
+.bracket__slot {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4rem 0.5rem;
+  min-width: 0;
+}
+
+.bracket__slot + .bracket__slot {
+  border-top: 1px solid var(--color-border);
+}
+
+.bracket__slot--empty {
+  justify-content: center;
+}
+
+.bracket__identity {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-width: 0;
+}
+
+.bracket__identity--won .bracket__name {
+  font-weight: 700;
+  color: var(--color-won-text);
+}
+
+.bracket__identity--lost {
+  opacity: 0.55;
+  text-decoration: line-through;
+}
+
+.bracket__avatar {
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+  border: 1px solid var(--color-border);
+  background: #ececec;
+}
+
+.bracket__avatar--empty {
+  background: #ececec;
+}
+
+.bracket__identity-text {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.bracket__name {
+  font-size: 0.85rem;
+  line-height: 1.2;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.bracket__subs {
+  font-size: 0.7rem;
+  color: var(--color-muted);
+  white-space: nowrap;
+}
+
+.bracket__placeholder {
+  color: var(--color-muted);
+  font-size: 0.8rem;
+}
+
+.bracket__bye-label {
+  font-size: 0.7rem;
+  color: var(--color-muted);
+  margin-left: auto;
+}
+
+.bracket__vs {
+  position: absolute;
+  right: 4px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: var(--color-accent);
+  background: var(--color-bg);
+  border: 1px solid var(--color-accent);
+  border-radius: 999px;
+  padding: 0 0.35rem;
+}
+
+.bracket__champion {
+  margin-top: 1rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  border: 1px solid var(--color-won-text);
+  background: var(--color-won-bg);
+  border-radius: 8px;
+  padding: 0.5rem 0.9rem;
+}
+
+.bracket__champion-label {
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--color-won-text);
+}
+
+.matchup__bracket,
+.result__bracket {
+  width: 100%;
+  max-width: 100%;
+}
+
+.matchup__bracket {
+  margin-top: 2.5rem;
+  border-top: 1px solid var(--color-border);
+  padding-top: 1.5rem;
+}
+
+@media (min-width: 720px) {
+  .bracket__round {
+    min-width: 17rem;
   }
 }
 /* Privacy page */

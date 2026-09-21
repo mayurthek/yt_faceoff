@@ -1,4 +1,6 @@
+import { buildBracket } from "../bracket";
 import type { Channel, FaceOffGame } from "../game/types";
+import Bracket from "./Bracket";
 
 interface ResultProps {
   game: FaceOffGame;
@@ -36,6 +38,9 @@ export default function Result({ game, onPlayAgain, onStartOver }: ResultProps) 
         >
           View on YouTube
         </a>
+      </div>
+      <div className="result__bracket">
+        <Bracket model={buildBracket(game)} />
       </div>
       <button type="button" className="link-button" onClick={onStartOver}>
         Start Over with Updated Subscriptions
