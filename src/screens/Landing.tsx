@@ -1,3 +1,5 @@
+import Wordmark from "./Wordmark";
+
 interface LandingProps {
   onConnect: () => void;
 }
@@ -5,7 +7,7 @@ interface LandingProps {
 export default function Landing({ onConnect }: LandingProps) {
   return (
     <main className="screen">
-      <p className="wordmark">Face-Off</p>
+      <Wordmark />
       <h1>Find Your Favorite YouTube Channel</h1>
       <p className="landing__lead">
         Compare the channels you subscribe to and choose one winner.

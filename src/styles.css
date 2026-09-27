@@ -95,6 +95,12 @@ a:hover {
   text-shadow: 1px 1px 0 rgba(20, 45, 75, 0.6);
 }
 
+.wordmark__mark {
+  margin-right: 11px;
+  vertical-align: middle;
+  text-shadow: none;
+}
+
 h1 {
   font-family: var(--font-head);
   font-size: 21px;

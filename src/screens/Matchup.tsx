@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { buildBracket } from "../bracket";
 import type { Channel, FaceOffGame, Side } from "../game/types";
 import Bracket from "./Bracket";
+import Wordmark from "./Wordmark";
 
 interface MatchupProps {
   game: FaceOffGame;
@@ -69,7 +70,7 @@ export default function Matchup({ game, onChoose }: MatchupProps) {
 
   return (
     <main className="screen">
-      <p className="wordmark">Face-Off</p>
+      <Wordmark />
       <div className="matchup__meta" aria-live="polite">
         <span>Round {game.round}</span>
         <span>

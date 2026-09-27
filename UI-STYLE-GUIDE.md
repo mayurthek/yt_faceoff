@@ -155,10 +155,14 @@ holds content.
 - The `inset 0 0 0 1px #ffffff` inner bevel is what makes borders look clickable.
 - Content is **top-aligned**, never vertically centered. Centered pages are modern.
 
-### Header bar
+### Header bar + logo
 
 The first child of every screen. Uses a negative margin to go full-bleed inside
 the panel's padding, so one class styles every page's header with no JSX changes.
+
+Keep the element a **block** (`<p>`, `<div>`) - do not set `display: flex` on it.
+Chrome drops the implicit paragraph role from the accessibility tree when a `<p>`
+becomes a flex container. Align the logo with `vertical-align` instead.
 
 ```css
 .wordmark {
@@ -176,9 +180,65 @@ the panel's padding, so one class styles every page's header with no JSX changes
   border-bottom: 1px solid #24486f;
   text-shadow: 1px 1px 0 rgba(20, 45, 75, 0.6);
 }
+
+.wordmark__mark {
+  margin-right: 11px;
+  vertical-align: middle;
+  text-shadow: none;
+}
 ```
 
-The `text-shadow` is what stops the white text looking flat. Keep it.
+The `text-shadow` is what stops the white text looking flat. Keep it, and reset it
+on the logo so it does not bleed onto the mark.
+
+### The logo mark
+
+A glossy beveled badge carrying two opposing chevrons - a left/right pair that
+reads as the choice mechanic. 28x28, inline SVG, `aria-hidden` because the
+adjacent wordmark text already names the product.
+
+```html
+<svg class="wordmark__mark" width="28" height="28" viewBox="0 0 28 28"
+     aria-hidden="true" focusable="false">
+  <defs>
+    <linearGradient id="fo-badge-fill" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"   stop-color="#d3e2f6" />
+      <stop offset="46%"  stop-color="#7ba3d4" />
+      <stop offset="52%"  stop-color="#3f6ba4" />
+      <stop offset="100%" stop-color="#2b5588" />
+    </linearGradient>
+    <linearGradient id="fo-badge-gloss" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"   stop-color="#ffffff" stop-opacity="0.72" />
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0" />
+    </linearGradient>
+  </defs>
+  <rect x="0.5" y="0.5" width="27" height="27" rx="4"
+        fill="url(#fo-badge-fill)" stroke="#17375a" />
+  <rect x="1.5" y="1.5" width="25" height="25" rx="3"
+        fill="none" stroke="#ffffff" stroke-opacity="0.65" />
+  <rect x="1.5" y="1.5" width="25" height="12" rx="3"
+        fill="url(#fo-badge-gloss)" />
+  <path d="M10.5 8.5 L6 14 L10.5 19.5" fill="none" stroke="#ffffff"
+        stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" />
+  <path d="M17.5 8.5 L22 14 L17.5 19.5" fill="none" stroke="#ffffff"
+        stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" />
+</svg>
+Face-Off
+```
+
+Why it is built this way:
+- **Four stacked rects, then two paths.** Outer rect is the badge, second is the
+  white inner bevel, third is the top-half gloss, the paths are the chevrons. It is
+  the same gloss recipe as the buttons, applied to a shape.
+- **The 46%/52% hard stop** on the fill is the "wafer" highlight from section 4.
+  Reuse it so the mark and the controls read as one system.
+- **Gradient IDs are fixed, not generated.** Only one wordmark mounts at a time, so
+  there is nothing to collide with. A duplicate would be harmless anyway, since both
+  would resolve to the same definition.
+- **Geometry:** the badge leaves a 5.5px inner margin on each side and the chevrons
+  span x=6 to 22, so the mark is optically centered.
+
+Wrap the logo and the text in a single component so every page stays consistent.
 
 ### Footer
 
@@ -779,6 +839,8 @@ Non-negotiable. The aesthetic is decoration; these are the contract.
 - [ ] `:root` tokens pasted verbatim; all components reference variables, not hex
 - [ ] Page is fixed 960px, top-aligned, hard `3px 3px 0` shadow, white inner bevel
 - [ ] Every page starts with the gradient `.wordmark` header bar
+- [ ] Logo mark sits left of the wordmark text, `aria-hidden`, aligned with `vertical-align`
+- [ ] The header element stays a block, not a flex container (it loses its paragraph role)
 - [ ] Buttons use a 3-stop gradient with a hard 50% highlight line, `4px` radius
 - [ ] `h1` has a dotted bottom rule
 - [ ] Links are `#0000ee`, underlined, with `#551a8b` visited

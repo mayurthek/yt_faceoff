@@ -1,3 +1,5 @@
+import Wordmark from "./Wordmark";
+
 interface ErrorScreenProps {
   title: string;
   message: string;
@@ -13,7 +15,7 @@ export default function ErrorScreen({
 }: ErrorScreenProps) {
   return (
     <main className="screen">
-      <p className="wordmark">Face-Off</p>
+      <Wordmark />
       <h1>{title}</h1>
       <p className="error__message" role="status">
         {message}

@@ -1,6 +1,7 @@
 import { buildBracket } from "../bracket";
 import type { Channel, FaceOffGame } from "../game/types";
 import Bracket from "./Bracket";
+import Wordmark from "./Wordmark";
 
 interface ResultProps {
   game: FaceOffGame;
@@ -14,7 +15,7 @@ export default function Result({ game, onPlayAgain, onStartOver }: ResultProps) 
 
   return (
     <main className="screen">
-      <p className="wordmark">Face-Off</p>
+      <Wordmark />
       <h1>Your Favorite Channel</h1>
       {winner.thumbnailUrl ? (
         <img

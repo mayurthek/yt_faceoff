@@ -1,10 +1,11 @@
 import Footer from "./screens/Footer";
+import Wordmark from "./screens/Wordmark";
 
 export default function Privacy() {
   return (
     <div className="page">
       <main className="screen">
-        <p className="wordmark">Face-Off</p>
+        <Wordmark />
         <h1>Privacy</h1>
         <div className="prose">
           <p>

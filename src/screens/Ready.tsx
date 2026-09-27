@@ -1,3 +1,5 @@
+import Wordmark from "./Wordmark";
+
 interface ReadyProps {
   channelCount: number;
   onStart: () => void;
@@ -8,7 +10,7 @@ export default function Ready({ channelCount, onStart, onReconnect }: ReadyProps
   if (channelCount === 0) {
     return (
       <main className="screen">
-        <p className="wordmark">Face-Off</p>
+        <Wordmark />
         <h1>We could not find any subscribed channels.</h1>
         <div className="ready__actions">
           <button type="button" className="button button--primary" onClick={onReconnect}>
@@ -30,7 +32,7 @@ export default function Ready({ channelCount, onStart, onReconnect }: ReadyProps
   if (channelCount === 1) {
     return (
       <main className="screen">
-        <p className="wordmark">Face-Off</p>
+        <Wordmark />
         <h1>You need at least two subscribed channels to start a face-off.</h1>
         <div className="ready__actions">
           <button type="button" className="button button--primary" onClick={onReconnect}>
@@ -43,7 +45,7 @@ export default function Ready({ channelCount, onStart, onReconnect }: ReadyProps
 
   return (
     <main className="screen">
-      <p className="wordmark">Face-Off</p>
+      <Wordmark />
       <h1>
         You have {channelCount} subscribed channel{channelCount === 1 ? "" : "s"}.
       </h1>
