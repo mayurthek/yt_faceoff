@@ -111,7 +111,7 @@ faceoff/
   - The accent focus ring measured **1.24:1** against the dark blue primary button → added a two-tone ring (white against the fill, accent against the page).
 - No `transition` or `@keyframes` anywhere, so `prefers-reduced-motion` is satisfied by construction. Losers keep `line-through` so state is never color-alone.
 - `UI-STYLE-GUIDE.md`: portable spec (tokens, type scale, component recipes, bracket rules, responsive, a11y contract, checklist, anti-patterns) for reuse on other projects. All 14 contrast pairs in it are measured, not estimated.
-- Verification: 120 unit/integration tests, typecheck 0, build OK, Lighthouse accessibility 1.0 / best-practices 1.0. Not verified: 375px mobile rendering (no viewport-emulation tool available) and SEO 0.6 (pre-existing missing meta description + invalid robots.txt, irrelevant for a localhost tool).
+- Verification: 121 unit/integration tests, typecheck 0, build OK, Lighthouse accessibility 1.0 / best-practices 1.0. Not verified: 375px mobile rendering (no viewport-emulation tool available) and SEO 0.6 (pre-existing missing meta description + invalid robots.txt, irrelevant for a localhost tool).
 - PRD section 8 was rewritten to match; section 7 (a11y) is unchanged and still takes precedence.
 
 ## Unit/coverage expansion (added)
@@ -126,7 +126,7 @@ faceoff/
 - New `src/screens/Bracket.tsx`: round columns + connector lines, avatar/name/subscriber-count cards, VS badge on the active matchup, won/lost strikethrough styling on played matches, TBD placeholders for future rounds, highlighted Final round + champion band. Styled in `src/styles.css` (`--color-line`, won/lost colors, `.bracket__*`) with horizontal scroll on mobile.
 - Wired into `Matchup` and `Result`; mock subscriptions carry `subscriberCount` where known.
 - Tests: `src/bracket.test.ts` (round counts/labels, bye reconstruction, played/active/pending/tbd states, champion, no mutation), `src/screens/Bracket.test.tsx` (labels, VS badge, subscriber formatting, champion, empty model -> nothing), game history lifecycle tests, sanitized subscriberCount passthrough.
-- Verification: 120 unit/integration tests passing, typecheck 0, build OK, coverage 89.26% statements.
+- Verification: 121 unit/integration tests passing, typecheck 0, build OK, coverage 89.47% statements.
 
 ## Keyboard-control requirements (added)
 - Left Arrow / Right Arrow choose left / right channel on the matchup screen.

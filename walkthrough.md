@@ -132,7 +132,7 @@ expired-session reconnect, silent access-token refresh.
 
 | Check | Result |
 | --- | --- |
-| Unit + integration tests (`npm test`) | 120/120 pass |
+| Unit + integration tests (`npm test`) | 121/121 pass |
 | TypeScript (`npm run typecheck`) | 0 errors |
 | Production build (`npm run build`) | OK |
 | Coverage (`npm run test:coverage`) | 89.47% statements, above thresholds |
@@ -155,7 +155,7 @@ game is playable offline.
 
 ### Tests
 ```bash
-npm test          # unit + integration (120)
+npm test          # unit + integration (121)
 npm run typecheck
 npm run build
 npm run test:coverage  # coverage thresholds (statements 80, branches 80, funcs 85, lines 80)
@@ -203,8 +203,9 @@ Work through the checklist in `docs/oauth-setup.md`:
 - [ ] Consent screen loads with read-only scope only, no write scopes.
 - [ ] **Grant** → Ready screen lists your real subscriptions.
 - [ ] **Deny** → “YouTube access was cancelled.” with Try Again.
-- [ ] Restart the server (`Ctrl+C`, `npm run dev`) → app shows “Reconnect YouTube”,
-      not a broken state.
+- [ ] Restart the server (`Ctrl+C`, `npm run dev`) → app returns to the Landing
+      screen with “Connect YouTube”. Sessions live only in server memory, so
+      this happens by design and is a clean start, not a broken state.
 - [ ] Start a face-off, use arrow keys + mouse, Play Again, Start Over → result.
 - [ ] `/privacy` reachable from Landing.
 

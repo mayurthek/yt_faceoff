@@ -71,8 +71,11 @@ npm run dev
       named and no write scopes.
 - [ ] Granting access lands on the Ready screen with your subscriptions.
 - [ ] Denying access shows the "cancelled" error with Try Again.
-- [ ] After restarting the server, the app shows "Reconnect YouTube", not a
-      broken state.
+- [ ] After restarting the server, the app returns to the Landing screen with
+      "Connect YouTube". Sessions live only in server memory, so a restart ends
+      them by design; this is a clean start, not a broken state.
+- [ ] If a session expires mid-session, the app shows "Your YouTube connection
+      expired." with a "Reconnect YouTube" action, and reconnecting works.
 - [ ] `/privacy` is reachable from the Landing screen.
 
 ## Troubleshooting
