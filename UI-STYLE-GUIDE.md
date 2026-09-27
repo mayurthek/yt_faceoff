@@ -240,6 +240,12 @@ Why it is built this way:
 
 Wrap the logo and the text in a single component so every page stays consistent.
 
+The same mark also ships as a standalone file at `assets/logo.svg`, which is what
+the README and any external use should reference. Keep the two in sync: the
+`viewBox` and all geometry are identical, and the file is simply the inline
+mark with `width`/`height` set to `120` so it renders at a usable size in
+markdown. If you change the mark, change both.
+
 ### Footer
 
 ```css

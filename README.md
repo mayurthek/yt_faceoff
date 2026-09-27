@@ -1,6 +1,10 @@
-# Face-Off
+<p align="center">
+  <img src="assets/logo.svg" width="120" alt="Face-Off logo" />
+</p>
 
-**Your YouTube subscriptions, settled by knockout.**
+<h1 align="center">Face-Off</h1>
+
+<p align="center"><em>Your YouTube subscriptions, settled by knockout.</em></p>
 
 You subscribe to hundreds of channels and have strong feelings about almost none of
 them. Face-Off puts two head to head, you pick a winner with the **Left / Right
