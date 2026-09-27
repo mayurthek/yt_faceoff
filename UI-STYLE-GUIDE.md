@@ -1,10 +1,10 @@
-# UI Style Guide â€” "Y2K Web 2.0"
+# UI Style Guide — "Y2K Web 2.0"
 
 A self-contained visual spec for the mid-2000s web aesthetic. Copy the `:root`
 block, use the component recipes, and you have the look. No framework, no
-dependencies â€” plain CSS.
+dependencies — plain CSS.
 
-**Mood:** 2005â€“2007. Glossy gradient buttons, fixed-width centered page, dotted
+**Mood:** 2005–2007. Glossy gradient buttons, fixed-width centered page, dotted
 dividers, steel-blue chrome, small type, one orange accent. Nostalgic but still
 legible and fully accessible.
 
@@ -44,7 +44,7 @@ Paste this as the first thing in your stylesheet. Everything else references the
 
 | Token | Hex | Use |
 | --- | --- | --- |
-| `--color-page-top` / `-bottom` | `#eef3f9` â†’ `#d3dfee` | Page background gradient behind the panel |
+| `--color-page-top` / `-bottom` | `#eef3f9` → `#d3dfee` | Page background gradient behind the panel |
 | `--color-panel` | `#ffffff` | Card and panel fill |
 | `--color-text` | `#1a1a1a` | Body copy |
 | `--color-heading` | `#1a3d63` | Headings, labels, button text |
@@ -91,12 +91,12 @@ darkened replacements, which keep the same hue and read as the same color.
 | Body / base | Verdana | 13px | 400 | `line-height: 1.6` |
 | Page heading (`h1`) | Trebuchet MS | 21px | 700 | dotted bottom rule |
 | Wordmark / header bar | Trebuchet MS | 19px | 700 | uppercase, `0.05em`, white + text-shadow |
-| Card title | Trebuchet MS | 15px | 700 | â€” |
+| Card title | Trebuchet MS | 15px | 700 | — |
 | Section label | Trebuchet MS | 11px | 700 | uppercase, `0.1em` |
 | Caption / metadata | Verdana | 12px | 400 | `--color-muted` |
-| Micro-label | Verdana | 10â€“11px | 400â€“700 | uppercase, `0.08em` |
+| Micro-label | Verdana | 10–11px | 400–700 | uppercase, `0.08em` |
 
-Type scale is intentionally small and low-contrast-differentiated â€” that is the
+Type scale is intentionally small and low-contrast-differentiated — that is the
 period tell. Do not introduce a font above 24px except for a single hero moment.
 
 ### Global baseline
@@ -120,8 +120,8 @@ holds content.
 
 ```html
 <div class="page">
-  <main class="screen">â€¦</main>
-  <footer class="site-footer">â€¦</footer>
+  <main class="screen">…</main>
+  <footer class="site-footer">…</footer>
 </div>
 ```
 
@@ -150,7 +150,7 @@ holds content.
 ```
 
 **Rules that make it read as the era:**
-- Fixed `--page-width: 960px`. Do not make it fluid â€” the fixed width *is* the look.
+- Fixed `--page-width: 960px`. Do not make it fluid — the fixed width *is* the look.
 - The drop shadow is a hard offset (`3px 3px 0`), never blurred. Blur is anachronistic.
 - The `inset 0 0 0 1px #ffffff` inner bevel is what makes borders look clickable.
 - Content is **top-aligned**, never vertically centered. Centered pages are modern.
@@ -257,8 +257,8 @@ Wrap the logo and the text in a single component so every page stays consistent.
 .site-footer__star { color: var(--color-accent); }
 ```
 
-Fill with `â˜…`-separated microcopy, e.g.
-`â˜… Best viewed at 1024Ã—768 â˜… Powered by the YouTube Data API v3`.
+Fill with `★`-separated microcopy, e.g.
+`★ Best viewed at 1024×768 ★ Powered by the YouTube Data API v3`.
 
 ### Headings
 
@@ -321,7 +321,7 @@ Three-stop gloss with a hard highlight at the 50% line. The "wafer" look.
 }
 ```
 
-Radius is `4px` â€” small. Pill shapes and `border-radius: 8px+` look 2013+.
+Radius is `4px` — small. Pill shapes and `border-radius: 8px+` look 2013+.
 
 ### Full-width action variant
 
@@ -351,7 +351,7 @@ Radius is `4px` â€” small. Pill shapes and `border-radius: 8px+` look 2013+
 
 ---
 
-## 5. Focus styles â€” required, do not skip
+## 5. Focus styles — required, do not skip
 
 The accent ring measures 5.50:1 on white but only **1.24:1 against the dark blue
 primary button**, so filled buttons need a two-tone ring: white against the dark
@@ -439,13 +439,13 @@ Use it as-is. Do not "modernize" to a muted grey.
 
 YouTube channel avatars are square: the Data API returns 240x240 for `medium`, and
 `youtube.readonly` gives nothing else. So the avatar must be `1 / 1` to match the
-original. A `16 / 9` ratio is a *video* thumbnail ratio and it crops the square
-into a letterbox strip.
+original. A `16 / 9` ratio is a *video* thumbnail ratio and it crops the square into
+a letterbox strip.
 
 Keep the box square and **uncropped**:
 - `aspect-ratio: 1 / 1` so the frame matches the source geometry.
 - `object-fit: contain`, never `cover`. `contain` guarantees the whole picture is
-  visible even if a channel's image is not perfectly square; `background` fills
+  visible even if a channel's image is not perfectly square; the `background` fills
   any letterbox. `cover` would silently crop.
 - No `border-radius`. The 2px border is the frame.
 
@@ -455,7 +455,6 @@ hero avatar to 11rem.
 The diagonal-stripe placeholder is a strong era cue and removes the need for any
 image asset. Because the avatar is square, use `padding: 0` and let the 2px border
 form the frame, rather than the inset white frame used on rectangular media.
-
 
 Inset panel (for grouped content that should read as recessed):
 
@@ -466,25 +465,6 @@ Inset panel (for grouped content that should read as recessed):
   border-style: inset;
 }
 ```
-
-YouTube channel avatars are square: the Data API returns 240x240 for `medium`, and
-`youtube.readonly` gives nothing else. So the avatar must be `1 / 1` to match the
-original. A `16 / 9` ratio is a *video* thumbnail ratio and it crops the square
-into a letterbox strip.
-
-Keep the box square and **uncropped**:
-- `aspect-ratio: 1 / 1` so the frame matches the source geometry.
-- `object-fit: contain`, never `cover`. `contain` guarantees the whole picture is
-  visible even if a channel's image is not perfectly square; `background` fills
-  any letterbox. `cover` would silently crop.
-- No `border-radius`. The 2px border is the frame.
-
-`max-width` caps the avatar at 13rem so two sit comfortably side by side; drop the
-hero avatar to 11rem.
-
-The diagonal-stripe placeholder is a strong era cue and removes the need for any
-image asset. Because the avatar is square, use `padding: 0` and let the 2px border
-form the frame, rather than the inset white frame used on rectangular media.
 
 Status bar above a two-column area:
 
@@ -504,25 +484,6 @@ Status bar above a two-column area:
 }
 ```
 
-YouTube channel avatars are square: the Data API returns 240x240 for `medium`, and
-`youtube.readonly` gives nothing else. So the avatar must be `1 / 1` to match the
-original. A `16 / 9` ratio is a *video* thumbnail ratio and it crops the square
-into a letterbox strip.
-
-Keep the box square and **uncropped**:
-- `aspect-ratio: 1 / 1` so the frame matches the source geometry.
-- `object-fit: contain`, never `cover`. `contain` guarantees the whole picture is
-  visible even if a channel's image is not perfectly square; `background` fills
-  any letterbox. `cover` would silently crop.
-- No `border-radius`. The 2px border is the frame.
-
-`max-width` caps the avatar at 13rem so two sit comfortably side by side; drop the
-hero avatar to 11rem.
-
-The diagonal-stripe placeholder is a strong era cue and removes the need for any
-image asset. Because the avatar is square, use `padding: 0` and let the 2px border
-form the frame, rather than the inset white frame used on rectangular media.
-
 Centered "VS" divider between two options:
 
 ```css
@@ -540,25 +501,6 @@ Centered "VS" divider between two options:
   border-radius: 4px;
 }
 ```
-
-YouTube channel avatars are square: the Data API returns 240x240 for `medium`, and
-`youtube.readonly` gives nothing else. So the avatar must be `1 / 1` to match the
-original. A `16 / 9` ratio is a *video* thumbnail ratio and it crops the square
-into a letterbox strip.
-
-Keep the box square and **uncropped**:
-- `aspect-ratio: 1 / 1` so the frame matches the source geometry.
-- `object-fit: contain`, never `cover`. `contain` guarantees the whole picture is
-  visible even if a channel's image is not perfectly square; `background` fills
-  any letterbox. `cover` would silently crop.
-- No `border-radius`. The 2px border is the frame.
-
-`max-width` caps the avatar at 13rem so two sit comfortably side by side; drop the
-hero avatar to 11rem.
-
-The diagonal-stripe placeholder is a strong era cue and removes the need for any
-image asset. Because the avatar is square, use `padding: 0` and let the 2px border
-form the frame, rather than the inset white frame used on rectangular media.
 
 ---
 
@@ -594,25 +536,6 @@ A horizontally scrolling ladder of round columns. Rounds narrow left to right.
 }
 ```
 
-YouTube channel avatars are square: the Data API returns 240x240 for `medium`, and
-`youtube.readonly` gives nothing else. So the avatar must be `1 / 1` to match the
-original. A `16 / 9` ratio is a *video* thumbnail ratio and it crops the square
-into a letterbox strip.
-
-Keep the box square and **uncropped**:
-- `aspect-ratio: 1 / 1` so the frame matches the source geometry.
-- `object-fit: contain`, never `cover`. `contain` guarantees the whole picture is
-  visible even if a channel's image is not perfectly square; `background` fills
-  any letterbox. `cover` would silently crop.
-- No `border-radius`. The 2px border is the frame.
-
-`max-width` caps the avatar at 13rem so two sit comfortably side by side; drop the
-hero avatar to 11rem.
-
-The diagonal-stripe placeholder is a strong era cue and removes the need for any
-image asset. Because the avatar is square, use `padding: 0` and let the 2px border
-form the frame, rather than the inset white frame used on rectangular media.
-
 **The `gap` and the connector stub width must match.** The stub below is
 `0.875rem` = 14px = the gap. Change one and you must change the other.
 
@@ -645,26 +568,7 @@ form the frame, rather than the inset white frame used on rectangular media.
 }
 ```
 
-YouTube channel avatars are square: the Data API returns 240x240 for `medium`, and
-`youtube.readonly` gives nothing else. So the avatar must be `1 / 1` to match the
-original. A `16 / 9` ratio is a *video* thumbnail ratio and it crops the square
-into a letterbox strip.
-
-Keep the box square and **uncropped**:
-- `aspect-ratio: 1 / 1` so the frame matches the source geometry.
-- `object-fit: contain`, never `cover`. `contain` guarantees the whole picture is
-  visible even if a channel's image is not perfectly square; `background` fills
-  any letterbox. `cover` would silently crop.
-- No `border-radius`. The 2px border is the frame.
-
-`max-width` caps the avatar at 13rem so two sit comfortably side by side; drop the
-hero avatar to 11rem.
-
-The diagonal-stripe placeholder is a strong era cue and removes the need for any
-image asset. Because the avatar is square, use `padding: 0` and let the 2px border
-form the frame, rather than the inset white frame used on rectangular media.
-
-The `â˜…` pseudo-element is a cheap, high-impact period detail.
+The `★` pseudo-element is a cheap, high-impact period detail.
 
 ### Match slots
 
@@ -689,25 +593,6 @@ The `â˜…` pseudo-element is a cheap, high-impact period detail.
   border-top: 1px solid var(--color-line);
 }
 ```
-
-YouTube channel avatars are square: the Data API returns 240x240 for `medium`, and
-`youtube.readonly` gives nothing else. So the avatar must be `1 / 1` to match the
-original. A `16 / 9` ratio is a *video* thumbnail ratio and it crops the square
-into a letterbox strip.
-
-Keep the box square and **uncropped**:
-- `aspect-ratio: 1 / 1` so the frame matches the source geometry.
-- `object-fit: contain`, never `cover`. `contain` guarantees the whole picture is
-  visible even if a channel's image is not perfectly square; `background` fills
-  any letterbox. `cover` would silently crop.
-- No `border-radius`. The 2px border is the frame.
-
-`max-width` caps the avatar at 13rem so two sit comfortably side by side; drop the
-hero avatar to 11rem.
-
-The diagonal-stripe placeholder is a strong era cue and removes the need for any
-image asset. Because the avatar is square, use `padding: 0` and let the 2px border
-form the frame, rather than the inset white frame used on rectangular media.
 
 ### Connector lines
 
@@ -739,25 +624,6 @@ horizontal stub bridging to the next round. Suppressed on the last round.
   display: none;
 }
 ```
-
-YouTube channel avatars are square: the Data API returns 240x240 for `medium`, and
-`youtube.readonly` gives nothing else. So the avatar must be `1 / 1` to match the
-original. A `16 / 9` ratio is a *video* thumbnail ratio and it crops the square
-into a letterbox strip.
-
-Keep the box square and **uncropped**:
-- `aspect-ratio: 1 / 1` so the frame matches the source geometry.
-- `object-fit: contain`, never `cover`. `contain` guarantees the whole picture is
-  visible even if a channel's image is not perfectly square; `background` fills
-  any letterbox. `cover` would silently crop.
-- No `border-radius`. The 2px border is the frame.
-
-`max-width` caps the avatar at 13rem so two sit comfortably side by side; drop the
-hero avatar to 11rem.
-
-The diagonal-stripe placeholder is a strong era cue and removes the need for any
-image asset. Because the avatar is square, use `padding: 0` and let the 2px border
-form the frame, rather than the inset white frame used on rectangular media.
 
 If you use a different column gap, recompute the stub: `right: calc(-1 * gap)`
 and `width: gap`.
@@ -791,26 +657,7 @@ and `width: gap`.
 }
 ```
 
-YouTube channel avatars are square: the Data API returns 240x240 for `medium`, and
-`youtube.readonly` gives nothing else. So the avatar must be `1 / 1` to match the
-original. A `16 / 9` ratio is a *video* thumbnail ratio and it crops the square
-into a letterbox strip.
-
-Keep the box square and **uncropped**:
-- `aspect-ratio: 1 / 1` so the frame matches the source geometry.
-- `object-fit: contain`, never `cover`. `contain` guarantees the whole picture is
-  visible even if a channel's image is not perfectly square; `background` fills
-  any letterbox. `cover` would silently crop.
-- No `border-radius`. The 2px border is the frame.
-
-`max-width` caps the avatar at 13rem so two sit comfortably side by side; drop the
-hero avatar to 11rem.
-
-The diagonal-stripe placeholder is a strong era cue and removes the need for any
-image asset. Because the avatar is square, use `padding: 0` and let the 2px border
-form the frame, rather than the inset white frame used on rectangular media.
-
-### Result states â€” never color alone
+### Result states — never color alone
 
 ```css
 .bracket__identity--won .bracket__name {
@@ -827,26 +674,7 @@ form the frame, rather than the inset white frame used on rectangular media.
 }
 ```
 
-YouTube channel avatars are square: the Data API returns 240x240 for `medium`, and
-`youtube.readonly` gives nothing else. So the avatar must be `1 / 1` to match the
-original. A `16 / 9` ratio is a *video* thumbnail ratio and it crops the square
-into a letterbox strip.
-
-Keep the box square and **uncropped**:
-- `aspect-ratio: 1 / 1` so the frame matches the source geometry.
-- `object-fit: contain`, never `cover`. `contain` guarantees the whole picture is
-  visible even if a channel's image is not perfectly square; `background` fills
-  any letterbox. `cover` would silently crop.
-- No `border-radius`. The 2px border is the frame.
-
-`max-width` caps the avatar at 13rem so two sit comfortably side by side; drop the
-hero avatar to 11rem.
-
-The diagonal-stripe placeholder is a strong era cue and removes the need for any
-image asset. Because the avatar is square, use `padding: 0` and let the 2px border
-form the frame, rather than the inset white frame used on rectangular media.
-
-`text-decoration: line-through` on losers is **required** â€” it is the
+`text-decoration: line-through` on losers is **required** — it is the
 non-color signal that keeps the bracket readable for colorblind users and
 satisfies the PRD's "do not communicate state through color alone."
 
@@ -894,26 +722,7 @@ satisfies the PRD's "do not communicate state through color alone."
 }
 ```
 
-YouTube channel avatars are square: the Data API returns 240x240 for `medium`, and
-`youtube.readonly` gives nothing else. So the avatar must be `1 / 1` to match the
-original. A `16 / 9` ratio is a *video* thumbnail ratio and it crops the square
-into a letterbox strip.
-
-Keep the box square and **uncropped**:
-- `aspect-ratio: 1 / 1` so the frame matches the source geometry.
-- `object-fit: contain`, never `cover`. `contain` guarantees the whole picture is
-  visible even if a channel's image is not perfectly square; `background` fills
-  any letterbox. `cover` would silently crop.
-- No `border-radius`. The 2px border is the frame.
-
-`max-width` caps the avatar at 13rem so two sit comfortably side by side; drop the
-hero avatar to 11rem.
-
-The diagonal-stripe placeholder is a strong era cue and removes the need for any
-image asset. Because the avatar is square, use `padding: 0` and let the 2px border
-form the frame, rather than the inset white frame used on rectangular media.
-
-Gold is used exactly once â€” the champion. It is the reward for scanning the
+Gold is used exactly once — the champion. It is the reward for scanning the
 whole page.
 
 ### Avatars and truncation
@@ -949,25 +758,6 @@ whole page.
   white-space: nowrap;
 }
 ```
-
-YouTube channel avatars are square: the Data API returns 240x240 for `medium`, and
-`youtube.readonly` gives nothing else. So the avatar must be `1 / 1` to match the
-original. A `16 / 9` ratio is a *video* thumbnail ratio and it crops the square
-into a letterbox strip.
-
-Keep the box square and **uncropped**:
-- `aspect-ratio: 1 / 1` so the frame matches the source geometry.
-- `object-fit: contain`, never `cover`. `contain` guarantees the whole picture is
-  visible even if a channel's image is not perfectly square; `background` fills
-  any letterbox. `cover` would silently crop.
-- No `border-radius`. The 2px border is the frame.
-
-`max-width` caps the avatar at 13rem so two sit comfortably side by side; drop the
-hero avatar to 11rem.
-
-The diagonal-stripe placeholder is a strong era cue and removes the need for any
-image asset. Because the avatar is square, use `padding: 0` and let the 2px border
-form the frame, rather than the inset white frame used on rectangular media.
 
 ---
 
@@ -1007,25 +797,6 @@ form the frame, rather than the inset white frame used on rectangular media.
 }
 ```
 
-YouTube channel avatars are square: the Data API returns 240x240 for `medium`, and
-`youtube.readonly` gives nothing else. So the avatar must be `1 / 1` to match the
-original. A `16 / 9` ratio is a *video* thumbnail ratio and it crops the square
-into a letterbox strip.
-
-Keep the box square and **uncropped**:
-- `aspect-ratio: 1 / 1` so the frame matches the source geometry.
-- `object-fit: contain`, never `cover`. `contain` guarantees the whole picture is
-  visible even if a channel's image is not perfectly square; `background` fills
-  any letterbox. `cover` would silently crop.
-- No `border-radius`. The 2px border is the frame.
-
-`max-width` caps the avatar at 13rem so two sit comfortably side by side; drop the
-hero avatar to 11rem.
-
-The diagonal-stripe placeholder is a strong era cue and removes the need for any
-image asset. Because the avatar is square, use `padding: 0` and let the 2px border
-form the frame, rather than the inset white frame used on rectangular media.
-
 ---
 
 ## 10. Responsive
@@ -1050,26 +821,7 @@ The fixed 960px is the look, so collapse it rather than scaling it.
 }
 ```
 
-YouTube channel avatars are square: the Data API returns 240x240 for `medium`, and
-`youtube.readonly` gives nothing else. So the avatar must be `1 / 1` to match the
-original. A `16 / 9` ratio is a *video* thumbnail ratio and it crops the square
-into a letterbox strip.
-
-Keep the box square and **uncropped**:
-- `aspect-ratio: 1 / 1` so the frame matches the source geometry.
-- `object-fit: contain`, never `cover`. `contain` guarantees the whole picture is
-  visible even if a channel's image is not perfectly square; `background` fills
-  any letterbox. `cover` would silently crop.
-- No `border-radius`. The 2px border is the frame.
-
-`max-width` caps the avatar at 13rem so two sit comfortably side by side; drop the
-hero avatar to 11rem.
-
-The diagonal-stripe placeholder is a strong era cue and removes the need for any
-image asset. Because the avatar is square, use `padding: 0` and let the 2px border
-form the frame, rather than the inset white frame used on rectangular media.
-
-The bracket keeps `overflow-x: auto` on mobile â€” horizontal scroll is acceptable
+The bracket keeps `overflow-x: auto` on mobile — horizontal scroll is acceptable
 and period-authentic. Do not try to reflow it into a vertical stack.
 
 ---
@@ -1090,17 +842,17 @@ Non-negotiable. The aesthetic is decoration; these are the contract.
 2. **State is never color alone.** Losers get strikethrough *and* reduced
    opacity. Active matches get a border change *and* a wash *and* a text badge.
 
-3. **Focus is always visible** and meets 3:1 against its background â€” use the
-   dual-tone ring in Â§5 for any dark filled control.
+3. **Focus is always visible** and meets 3:1 against its background — use the
+   dual-tone ring in §5 for any dark filled control.
 
 4. **`aria-label` needs a role.** A bare `<div>` or `<span>` cannot take an
    accessible name. Add `role="group"` or `role="img"` alongside `aria-label`,
    or Lighthouse will fail the audit.
 
-5. **Body text â‰¥ 4.5:1.** `--color-muted` (6.90) is the floor for any text.
+5. **Body text ≥ 4.5:1.** `--color-muted` (6.90) is the floor for any text.
    Never introduce a lighter grey for small type.
 
-6. **Keep the contrast table in Â§1 accurate** if you edit any color.
+6. **Keep the contrast table in §1 accurate** if you edit any color.
 
 ---
 
