@@ -5,7 +5,13 @@ import type { Channel } from "../game/types";
 function Avatar({ channel }: { channel: Channel }) {
   const label = `avatar for ${channel.title}`;
   if (!channel.thumbnailUrl) {
-    return <span className="bracket__avatar bracket__avatar--empty" aria-label={label} />;
+    return (
+      <span
+        className="bracket__avatar bracket__avatar--empty"
+        role="img"
+        aria-label={label}
+      />
+    );
   }
   return (
     <img
@@ -53,7 +59,11 @@ function MatchupView({ match }: { match: BracketMatch }) {
     }
     case "active":
       return (
-        <div className="bracket__match bracket__match--active" aria-label="Current matchup">
+        <div
+          className="bracket__match bracket__match--active"
+          role="group"
+          aria-label="Current matchup"
+        >
           <div className="bracket__slot">
             <ChannelIdentity channel={match.left!} state="neutral" />
           </div>

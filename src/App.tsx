@@ -14,6 +14,7 @@ import Ready from "./screens/Ready";
 import Matchup from "./screens/Matchup";
 import Result from "./screens/Result";
 import ErrorScreen from "./screens/ErrorScreen";
+import Footer from "./screens/Footer";
 
 type Screen =
   | { name: "landing" }
@@ -190,36 +191,45 @@ export default function App() {
     });
   }, []);
 
-  switch (screen.name) {
-    case "landing":
-      return <Landing onConnect={() => void reachReady(true)} />;
-    case "connecting":
-      return <Connecting />;
-    case "ready":
-      return (
-        <Ready
-          channelCount={screen.channels.length}
-          onStart={startFaceOff}
-          onReconnect={() => void reachReady(true)}
-        />
-      );
-    case "playing":
-      return <Matchup game={screen.game} onChoose={choose} />;
-    case "result":
-      return (
-        <Result
-          game={screen.game}
-          onPlayAgain={startAgain}
-          onStartOver={() => void reachReady(false)}
-        />
-      );
-    case "error":
-      return (
-        <ErrorScreen
-          title={screen.title}
-          message={screen.message}
-          primaryAction={{ label: screen.actionLabel, onClick: screen.onRetry }}
-        />
-      );
-  }
+  const renderScreen = () => {
+    switch (screen.name) {
+      case "landing":
+        return <Landing onConnect={() => void reachReady(true)} />;
+      case "connecting":
+        return <Connecting />;
+      case "ready":
+        return (
+          <Ready
+            channelCount={screen.channels.length}
+            onStart={startFaceOff}
+            onReconnect={() => void reachReady(true)}
+          />
+        );
+      case "playing":
+        return <Matchup game={screen.game} onChoose={choose} />;
+      case "result":
+        return (
+          <Result
+            game={screen.game}
+            onPlayAgain={startAgain}
+            onStartOver={() => void reachReady(false)}
+          />
+        );
+      case "error":
+        return (
+          <ErrorScreen
+            title={screen.title}
+            message={screen.message}
+            primaryAction={{ label: screen.actionLabel, onClick: screen.onRetry }}
+          />
+        );
+    }
+  };
+
+  return (
+    <div className="page">
+      {renderScreen()}
+      <Footer />
+    </div>
+  );
 }
