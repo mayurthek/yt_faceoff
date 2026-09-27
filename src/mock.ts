@@ -3,28 +3,28 @@ import type { Channel } from "./game/types";
 const MOCK_CHANNELS: Channel[] = [
   {
     id: "UCsXVk37bltHxD1rDPwtNMXQ",
-    title: "Kurzgesagt – In a Nutshell",
-    thumbnailUrl: "https://picsum.photos/seed/ucsxv/320/180",
+    title: "Kurzgesagt â€“ In a Nutshell",
+    thumbnailUrl: "https://picsum.photos/seed/ucsxv/320/320",
     subscriberCount: 22500000,
     channelUrl: "https://www.youtube.com/channel/UCsXVk37bltHxD1rDPwtNMXQ",
   },
   {
     id: "UCBa659QWEk1AI4Tg--mg2zw",
     title: "Ryan Trahan",
-    thumbnailUrl: "https://picsum.photos/seed/ucba6/320/180",
+    thumbnailUrl: "https://picsum.photos/seed/ucba6/320/320",
     subscriberCount: 18400000,
     channelUrl: "https://www.youtube.com/channel/UCBa659QWEk1AI4Tg--mg2zw",
   },
   {
     id: "UCXuqSBlHAE6Xw-yeJA0Tunw",
     title: "Linustechtips",
-    thumbnailUrl: "https://picsum.photos/seed/ucxuq/320/180",
+    thumbnailUrl: "https://picsum.photos/seed/ucxuq/320/320",
     channelUrl: "https://www.youtube.com/channel/UCXuqSBlHAE6Xw-yeJA0Tunw",
   },
   {
     id: "UClB4KMO5h9P6VPa1Ek1V3NQ",
     title: "Netflix",
-    thumbnailUrl: "https://picsum.photos/seed/uclb4/320/180",
+    thumbnailUrl: "https://picsum.photos/seed/uclb4/320/320",
     subscriberCount: 60000000,
     channelUrl: "https://www.youtube.com/channel/UClB4KMO5h9P6VPa1Ek1V3NQ",
   },
@@ -36,7 +36,7 @@ const MOCK_CHANNELS: Channel[] = [
   {
     id: "UCX6bQPVTY2dsf4GZtZ7U5nA",
     title: "MrBeast",
-    thumbnailUrl: "https://picsum.photos/seed/ucx6b/320/180",
+    thumbnailUrl: "https://picsum.photos/seed/ucx6b/320/320",
     subscriberCount: 316000000,
     channelUrl: "https://www.youtube.com/channel/UCX6bQPVTY2dsf4GZtZ7U5nA",
   },
@@ -48,7 +48,7 @@ const MOCK_CHANNELS: Channel[] = [
   {
     id: "UCZZvgSMRsLCNlU4-km1frcg",
     title: "Rooster Teeth",
-    thumbnailUrl: "https://picsum.photos/seed/uczzv/320/180",
+    thumbnailUrl: "https://picsum.photos/seed/uczzv/320/320",
     channelUrl: "https://www.youtube.com/channel/UCZZvgSMRsLCNlU4-km1frcg",
   },
 ];

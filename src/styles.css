@@ -237,11 +237,13 @@ a:focus-visible {
 .thumbnail {
   display: block;
   width: 100%;
-  aspect-ratio: 16 / 9;
+  max-width: 13rem;
+  aspect-ratio: 1 / 1;
   object-fit: cover;
-  padding: 3px;
+  padding: 0;
   background: #eef1f5;
-  border: 1px solid var(--color-border-dark);
+  border: 2px solid var(--color-border-dark);
+  border-radius: 50%;
   box-shadow: inset 0 0 0 1px #ffffff;
 }
 
@@ -329,7 +331,7 @@ a:focus-visible {
 }
 
 .result__thumbnail {
-  max-width: 26rem;
+  max-width: 11rem;
   margin-top: 4px;
 }
 

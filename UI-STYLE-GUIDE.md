@@ -416,12 +416,19 @@ Use it as-is. Do not "modernize" to a muted grey.
 .thumbnail {
   display: block;
   width: 100%;
-  aspect-ratio: 16 / 9;
+  max-width: 13rem;
+  aspect-ratio: 1 / 1;
   object-fit: cover;
-  padding: 3px;
+  padding: 0;
   background: #eef1f5;
-  border: 1px solid var(--color-border-dark);
+  border: 2px solid var(--color-border-dark);
+  border-radius: 50%;
   box-shadow: inset 0 0 0 1px #ffffff;
+}
+
+.result__thumbnail {
+  max-width: 11rem;
+  margin-top: 4px;
 }
 
 .thumbnail--placeholder {
@@ -431,8 +438,15 @@ Use it as-is. Do not "modernize" to a muted grey.
 }
 ```
 
+YouTube channel avatars are square: the Data API returns 240x240 for `medium`, and
+`youtube.readonly` gives nothing else. So the avatar must be `1 / 1` at
+`border-radius: 50%` to match the original. A `16 / 9` ratio is a *video*
+thumbnail ratio and it crops the square into a strip. `max-width` caps the avatar
+at 13rem so two sit comfortably side by side; drop the hero avatar to 11rem.
+
 The diagonal-stripe placeholder is a strong era cue and removes the need for any
-image asset. The `padding: 3px` on `.thumbnail` creates the framed look.
+image asset. Because the avatar is circular, use `padding: 0` and let the 2px
+border form the ring, rather than the inset white frame used on rectangular media.
 
 Inset panel (for grouped content that should read as recessed):
 
