@@ -266,3 +266,14 @@ accessibility contract. It is self-contained and portable to other projects.
 | [`docs/quota.md`](docs/quota.md) | YouTube Data API quota costs and how the app stays within them |
 | [`docs/prd.txt`](docs/prd.txt) | The original product requirements, extracted from the source PDF |
 | [`UI-STYLE-GUIDE.md`](UI-STYLE-GUIDE.md) | The visual design system, portable to other projects |
+
+---
+
+## License
+
+[MIT](LICENSE) - free to use, modify, and ship, including commercially, with
+attribution. See [`LICENSE`](LICENSE) for the full text.
+
+The one thing this project asks in return: that the privacy and security
+properties described in [How it works](#how-it-works) survive a fork. In
+particular, keep the read-only OAuth scope and keep tokens server-side.
