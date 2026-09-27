@@ -239,11 +239,10 @@ a:focus-visible {
   width: 100%;
   max-width: 13rem;
   aspect-ratio: 1 / 1;
-  object-fit: cover;
+  object-fit: contain;
   padding: 0;
   background: #eef1f5;
   border: 2px solid var(--color-border-dark);
-  border-radius: 50%;
   box-shadow: inset 0 0 0 1px #ffffff;
 }
 
