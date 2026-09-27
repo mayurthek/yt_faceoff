@@ -76,7 +76,7 @@ export function createOAuth(
 
     buildAuthUrl(state: string): string {
       const params = new URLSearchParams({
-        ...credentials,
+        client_id: config.googleClientId,
         redirect_uri: redirectUri,
         response_type: "code",
         scope: config.oauthScope,

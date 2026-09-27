@@ -42,6 +42,13 @@ describe("createOAuth", () => {
     expect(url.searchParams.get("state")).toBe("state-abc");
   });
 
+  it("buildAuthUrl never sends the client secret in the query string", () => {
+    const oauth = createOAuth(config, runtime);
+    const raw = oauth.buildAuthUrl("state-abc");
+    expect(raw).not.toContain("client-secret");
+    expect(new URL(raw).searchParams.has("client_secret")).toBe(false);
+  });
+
   it("exchangeCode posts the expected form and returns tokens", async () => {
     const fetchImpl = vi.fn(async () => res({ access_token: "at", refresh_token: "rt", expires_in: 3600 }));
     const oauth = createOAuth(config, { ...runtime, fetchImpl });
