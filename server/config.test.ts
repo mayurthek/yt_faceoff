@@ -20,6 +20,8 @@ describe("loadConfig", () => {
       delete process.env[key];
     }
 
+    vi.spyOn(process, "loadEnvFile").mockImplementation(() => {});
+
     const config = loadConfig();
     expect(config).toEqual({
       port: 3001,

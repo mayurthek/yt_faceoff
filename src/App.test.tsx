@@ -1,5 +1,5 @@
 // @vitest-environment jsdom
-import { describe, expect, it, vi } from "vitest";
+import { describe, expect, it, vi, beforeEach } from "vitest";
 import { render, screen, fireEvent } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import App from "./App";
@@ -12,6 +12,10 @@ vi.mock("./mock", () => ({
     { id: "c", title: "Gamma", channelUrl: "https://youtube.com/channel/c" },
   ] satisfies Channel[]),
 }));
+
+beforeEach(() => {
+  vi.stubEnv("VITE_USE_MOCK", "true");
+});
 
 describe("App full flow", () => {
   it("plays a whole face-off with the keyboard and shows the winner", async () => {

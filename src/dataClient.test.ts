@@ -1,5 +1,5 @@
 // @vitest-environment jsdom
-import { describe, expect, it, vi, afterEach } from "vitest";
+import { describe, expect, it, vi, afterEach, beforeEach } from "vitest";
 import { usesMockData, loadSubscriptions, connectYouTube, restoreSession } from "./dataClient";
 
 function jsonResponse(status: number, body: unknown) {
@@ -10,6 +10,10 @@ function jsonResponse(status: number, body: unknown) {
   } as Response;
 }
 
+beforeEach(() => {
+  vi.stubEnv("VITE_USE_MOCK", "true");
+});
+
 afterEach(() => {
   vi.unstubAllGlobals();
   vi.unstubAllEnvs();
@@ -17,7 +21,7 @@ afterEach(() => {
 });
 
 describe("dataClient mode switching", () => {
-  it("uses mock data by default", async () => {
+  it("uses mock data when VITE_USE_MOCK is not false", async () => {
     expect(usesMockData()).toBe(true);
     const subs = await loadSubscriptions();
     expect(subs.length).toBeGreaterThanOrEqual(2);
