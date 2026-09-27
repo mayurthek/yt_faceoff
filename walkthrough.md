@@ -15,6 +15,11 @@ Built against the PRD (`docs/prd.txt`) and tracked in `PLAN.md`.
 Stack: Node 20 + Vite 6 + React 19 + TypeScript, Fastify 5 server, plain CSS, Vitest
 (unit/integration), Playwright (e2e against an in-process mock).
 
+**Look and feel:** a mid-2000s "web 2.0" skin — fixed 960px centered panel, glossy
+gradient buttons, blue gradient header bar, Verdana/Trebuchet type, dotted rules,
+one burnt-orange accent. Nostalgic, but the structure underneath is fully semantic
+and accessible. The full spec lives in `UI-STYLE-GUIDE.md`.
+
 ---
 
 ## 2. What has landed (all phases complete)
@@ -29,10 +34,11 @@ bye handling for odd rounds, double-click guard, Play Again reset + reshuffle,
 malformed-record sanitizing. 17 unit tests.
 
 ### Phase 3 — UI (mock data) ✅
-White/black, narrow-centered layout; screens Landing, Connecting, Ready, Matchup,
-Result, ErrorScreen; empty / single-channel states; **keyboard arrows + visible
-focus + accessible `Choose <channel>` names**; `src/api.ts` typed fetch wrapper +
-`ApiError` kinds; `src/mock.ts`; reduced-motion + contrast.
+Screens Landing, Connecting, Ready, Matchup, Result, ErrorScreen; empty /
+single-channel states; **keyboard arrows + visible focus + accessible
+`Choose <channel>` names**; `src/api.ts` typed fetch wrapper + `ApiError` kinds;
+`src/mock.ts`; reduced-motion + contrast. (Visual styling was originally plain
+white/black and was later replaced — see the 2000s reskin section below.)
 
 ### Phase 4 — OAuth layer ✅
 `/api/auth/url`, `/api/auth/callback`, `/api/auth/status`, `/api/auth/disconnect`;
@@ -86,6 +92,40 @@ expired-session reconnect, silent access-token refresh.
   placeholders, a highlighted Final, and a champion band. Plain CSS in `styles.css`
   with horizontal scroll on mobile.
 
+### 2000s UI reskin ✅
+- The plain white/black look was replaced with a mid-2000s "web 2.0" skin across
+  **all** screens and the bracket. Visual only — every ARIA role, accessible name,
+  `role="status"`, and the arrow-key handler are untouched.
+- `styles.css` is now token-driven (`:root`): fixed 960px page panel on a pale-blue
+  gradient, hard `3px 3px 0` offset shadow, white inner bevel, full-bleed blue
+  gradient header bar, Verdana 13px / Trebuchet MS, 3-stop gloss buttons at 4px
+  radius, dotted rules under headings, diagonal-stripe image placeholders.
+- The header bar is styled from the existing `.wordmark` element via a negative
+  margin, so all seven screens gained the chrome without JSX changes. A new
+  `src/screens/Footer.tsx` adds the "best viewed at 1024x768" bar, wrapped by
+  `.page` in `App.tsx` and `Privacy.tsx`.
+- Bracket re-skinned: gloss slots, gold `★ FINAL` tab, orange wash on the live
+  matchup, orange VS pill, dotted bye slots, gold champion badge.
+- **Four accessibility defects were found and fixed** while porting the look, each
+  verified by measurement rather than assumption:
+  - `aria-label` sat on role-less `<div>`/`<span>` elements (a prohibited ARIA
+    attribute) → added `role="group"` and `role="img"`. Lighthouse 0.95 → **1.0**.
+  - Accent `#cc5500` was **4.31:1** on white (below AA 4.5) → `#b34700`, now 5.50:1.
+  - Border `#7b9cbf` was **2.86:1** (below the 3:1 minimum for UI boundaries) →
+    `#5f81a4`, now 4.07:1.
+  - The accent focus ring was **1.24:1** against the dark blue primary button →
+    added a two-tone ring (white against the fill, accent against the page).
+- There are no `transition` or `@keyframes` anywhere, so `prefers-reduced-motion` is
+  satisfied by construction. Losers keep their `line-through`, so state is never
+  communicated by color alone.
+- `UI-STYLE-GUIDE.md` documents the whole system (tokens, type scale, component
+  recipes, bracket rules, responsive rules, a11y contract, a checklist, and an
+  anti-pattern list) for reuse on other projects. All 14 contrast pairs in it are
+  measured.
+- Not verified: 375px mobile rendering (no viewport-emulation tool was available) and
+  SEO 0.6 (a pre-existing missing meta description and invalid `robots.txt`, both
+  irrelevant for a localhost-only tool).
+
 ---
 
 ## 3. Current verification status
@@ -95,9 +135,11 @@ expired-session reconnect, silent access-token refresh.
 | Unit + integration tests (`npm test`) | 120/120 pass |
 | TypeScript (`npm run typecheck`) | 0 errors |
 | Production build (`npm run build`) | OK |
-| Coverage (`npm run test:coverage`) | 89.26% statements, above thresholds |
+| Coverage (`npm run test:coverage`) | 89.47% statements, above thresholds |
 | Playwright e2e (`npm run test:e2e`) | 9/9 pass |
 | Prod smoke (server: `/`, `/privacy`, headers) | 200 + security headers |
+| Lighthouse accessibility (2000s skin) | 1.0 |
+| Lighthouse best practices | 1.0 |
 
 ---
 

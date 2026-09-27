@@ -57,7 +57,7 @@ faceoff/
 - Vitest: 17 tests cover 2/3/4/5 channels, no self-pair, left/right advance, double-click guard, Play Again reset+reshuffle, updated-subscriptions replacement, malformed-record sanitizing.
 
 ### Phase 3 - UI screens (mock data) ✅
-- White/black plain design, narrow centered layout, semantic HTML, real buttons (plain CSS only).
+- Structure was always semantic HTML, real buttons, plain CSS only. The original white/black plain look was later replaced by the 2000s reskin (see "2000s UI reskin" below).
 - Matchup screen: cards side by side on desktop, stacked left-then-right on mobile.
 - Keboard: Left/Right arrow selection + visible focus styles + accessible names (`Choose <channel>`).
 - Screens: Landing, Connecting, Ready, Matchup, Result, ErrorScreen; empty/one-channel states on Ready.
@@ -98,6 +98,21 @@ faceoff/
 - **Docs**: `docs/oauth-setup.md` (GCP project, enable YouTube Data API v3, consent screen as External + youtube.readonly + test users, web-client credentials with redirect URI `http://localhost:5173/api/auth/callback`, `.env.local`, manual verification checklist, troubleshooting) and `docs/quota.md` (quota units per request, on-demand fetching, increase/reset). `.env.example` documents the e2e-only vars.
 - Verification: 58 unit/integration tests, typecheck 0, build OK, 9/9 e2e, prod smoke returns 200 + headers on `/` and `/privacy`.
 - Remaining manual step for real Google flow: create Google credentials per `docs/oauth-setup.md`, fill `.env.local`, then run the manual verification checklist (consent screen, grant/deny, reconnect after server restart). Efficient for the user to do once.
+
+## 2000s UI reskin (added)
+- Replaced the white/black plain look with a mid-2000s "web 2.0" aesthetic across **all** screens (Landing, Connecting, Ready, Matchup, Result, ErrorScreen, Privacy) plus the tournament bracket. Visual-only: every ARIA role, accessible name, `role="status"`, and the arrow-key handler are unchanged.
+- `src/styles.css` rewritten around a token block (`:root`): fixed 960px page panel on a pale-blue gradient with a hard `3px 3px 0` offset shadow and white inner bevel; full-bleed blue gradient header bar; Verdana 13px body / Trebuchet MS headings; 3-stop gloss buttons at 4px radius; dotted rules under headings; diagonal-stripe image placeholders so no image asset is needed.
+- Header bar is styled from the existing `.wordmark` via a negative margin, so all seven screens gained the chrome with no JSX changes. New `src/screens/Footer.tsx` (the "best viewed at 1024x768" bar) wrapped by `.page` in `App.tsx` and `Privacy.tsx`.
+- Bracket re-skinned: gloss slots, gold `★ FINAL` tab, orange wash on the live matchup, orange VS pill, dotted bye slots, gold champion badge. Connector pseudo-elements recomputed so the 14px stub exactly bridges the 14px column gap.
+- **Accessibility defects found and fixed while porting the look** (measured, not assumed):
+  - Lighthouse 0.95 → **1.0**. `aria-label` was on role-less `<div>`/`<span>` in `Bracket.tsx`, a prohibited ARIA attribute; added `role="group"` and `role="img"`.
+  - Accent `#cc5500` measured **4.31:1** on white (below AA 4.5) → replaced with `#b34700` at **5.50:1**.
+  - Border `#7b9cbf` measured **2.86:1** (below the 3:1 minimum for UI boundaries) → replaced with `#5f81a4` at **4.07:1**.
+  - The accent focus ring measured **1.24:1** against the dark blue primary button → added a two-tone ring (white against the fill, accent against the page).
+- No `transition` or `@keyframes` anywhere, so `prefers-reduced-motion` is satisfied by construction. Losers keep `line-through` so state is never color-alone.
+- `UI-STYLE-GUIDE.md`: portable spec (tokens, type scale, component recipes, bracket rules, responsive, a11y contract, checklist, anti-patterns) for reuse on other projects. All 14 contrast pairs in it are measured, not estimated.
+- Verification: 120 unit/integration tests, typecheck 0, build OK, Lighthouse accessibility 1.0 / best-practices 1.0. Not verified: 375px mobile rendering (no viewport-emulation tool available) and SEO 0.6 (pre-existing missing meta description + invalid robots.txt, irrelevant for a localhost tool).
+- PRD section 8 was rewritten to match; section 7 (a11y) is unchanged and still takes precedence.
 
 ## Unit/coverage expansion (added)
 - Direct unit tests for the client data layers and remaining screens: `src/api.test.ts` (session status, subscription sanitizing + ApiError kind mapping, OAuth redirect), `src/dataClient.test.ts` (mock/real mode switching via `vi.stubEnv`), `src/mock.test.ts` (shape + defensive copies), and `Landing`/`Connecting`/`Ready`/`Result`/`ErrorScreen` screen tests; `server/config.test.ts` covers defaults + overrides.

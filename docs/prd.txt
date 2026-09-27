@@ -9,7 +9,8 @@ The user connects YouTube, the app loads subscribed channels, and the app presen
 channels at a time. The user chooses the preferred channel. The winner advances through a 
 single-elimination tournament until one ﬁnal channel remains.
 The product should feel like a small focused utility, not a social network. The interface 
-should be white, black, bold, readable, and easy to understand without instructions.
+should be bold, readable, and easy to understand without instructions. The visual direction 
+was revised after the original plain white/black spec: see section 8.
 2. Problem
 A user may subscribe to many YouTube channels but may not know which one they 
 personally prefer. A normal subscription list is passive. This product turns that list into a 
@@ -139,19 +140,33 @@ contrast, descriptive image alt text, and accessible names containing channel na
 not communicate state through color alone. Respect reduced-motion preferences if 
 transitions are added.
 8. Visual and UX direction
-The design must be intentionally plain:
-• Background: white.
-• Text: black or near-black.
-• Typography: Arial, Arial Black, or a similar sans-serif.
-• Headings: bold and compact.
-• Cards: white with a thin black or light-gray border.
-• Buttons: large, clear, and easy to distinguish.
-• Shadows: none or very subtle.
-• Color: use at most one restrained accent for focus or selected state.
-• Animation: none or a short transition only.
-• Layout: centered, narrow, and uncluttered.
-Avoid gradients, glassmorphism, illustrations, dashboards, sidebars, carousels, complex 
-navigation, and decorative UI.
+Revised after the first implementation. The original direction (plain white/black, no 
+gradients, no shadows) was deliberately replaced with a mid-2000s "web 2.0" aesthetic: 
+a deliberately nostalgic skin applied over the same semantic, accessible structure. The 
+requirements in section 7 are unchanged and still take precedence over this section.
+• Overall mood: mid-2000s web 2.0. Nostalgic, but still legible and fully accessible.
+• Page: fixed 960px centered white panel on a pale blue gradient, with a hard offset 
+drop shadow and a white inner bevel. Not full-width, not fluid.
+• Header: a blue gradient bar with white uppercase heading text and a hard text shadow.
+• Typography: Verdana for body copy at 13px; Trebuchet MS for headings. Small type 
+and generous letterspacing on labels.
+• Color: one restrained accent (burnt orange) for hover, focus, and the live matchup 
+only. Gold is reserved exclusively for the champion. 
+• Buttons: 3-stop gloss gradients with a hard highlight line, small 4px radius, 
+chunky 1px borders. Large, clear, and easy to distinguish.
+• Dividers: dotted 1px rules under headings and between sections.
+• Images: framed with a 3px white inset; missing images use a diagonal-stripe 
+placeholder so no image asset is required.
+• State: never communicated through color alone. Losers keep a line-through in 
+addition to reduced opacity; the live matchup adds a badge as well as a color shift.
+• Focus: always visible and at least 3:1 against its background. Dark filled controls 
+use a two-tone ring (white against the fill, accent against the page).
+• Animation: none. There are no transitions or keyframes anywhere, which satisfies 
+reduced-motion by construction.
+• Accessibility floor is unchanged: body text at least 4.5:1, every aria-label 
+attached to an element that has a role, semantic HTML and real buttons.
+Avoid: blurred shadows, corner radii above 5px, modern system-ui fonts, grey-blue 
+links, vertical centering of the page, dark mode, and any smooth scroll or fade.
 Preferred copy is direct: Connect YouTube, Start Face-Oﬀ, Choose this channel, Next 
 match, Your Favorite Channel, and Play Again.
 9. Suggested screen layouts
